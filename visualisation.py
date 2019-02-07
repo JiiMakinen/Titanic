@@ -104,9 +104,9 @@ plt.show()
 
 plt.figure(figsize=(8,7))
 train["Age"] = train["Age"].fillna(-0.5)
-bins = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
+breaks = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
 labels = ['Unknown', 'Baby', 'Child', 'Teenager', 'Student', 'Young Adult', 'Adult', 'Senior']
-train['AgeGroup'] = pd.cut(train["Age"], bins, labels=labels)
+train['AgeGroup'] = pd.cut(train["Age"], breaks, labels=labels)
 s = sns.barplot(x="AgeGroup", y="Survived", data=train)
 s.set_xticklabels(s.get_xticklabels(), rotation=40, ha="right")
 plt.show()
