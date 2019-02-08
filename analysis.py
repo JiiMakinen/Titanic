@@ -185,7 +185,6 @@ gBoost_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
 print(gBoost_accuracy)
 
 
-
 # Visualising the accuracy rates of the models:
 
 df1 = pd.DataFrame({
@@ -198,7 +197,7 @@ print(y)
 print(range(5))
 plt.figure(figsize=(8, 7))
 models_plot = sns.barplot(x="Model", y="Accuracy", data=df1, palette="muted")
-# models_plot.set_ylabels("Accuracy of the model")
+
 
 for i in range(5):
     plt.text(xlocs[i]-0.3, y[i]+2, str(y[i]))
@@ -206,7 +205,7 @@ for i in range(5):
 models_plot.set_xticklabels(models_plot.get_xticklabels(), rotation=15, ha="right")
 plt.show()
 
-# Here we can see taht the best model for predicting the survivors is the Gradient Boosting Classifier.
+# Here we can see that the best model for predicting the survivors is the Gradient Boosting Classifier.
 # Lets use it to predict the survival of the whole test group in test.csv.
 
 
