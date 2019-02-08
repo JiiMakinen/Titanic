@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 test = pd.read_csv('test.csv')
@@ -87,6 +89,125 @@ print(pd.isnull(train).sum())
 print(pd.isnull(test).sum())
 
 # Missing data has been filled, now assing numerical groups to sex, fare, embarkment
+
+sex_map = {"male": 0, "female": 1}
+embarked_map = {"S": 1, "C": 2, "Q": 3}
+
+train['Embarked'] = train['Embarked'].map(embarked_map)
+test['Embarked'] = test['Embarked'].map(embarked_map)
+
+train['Sex'] = train['Sex'].map(sex_map)
+test['Sex'] = test['Sex'].map(sex_map)
+
+# Make categories for the fare and map them
+
+train['FareGroup'] = pd.qcut(train['Fare'], 4, labels=[1, 2, 3, 4])
+test['FareGroup'] = pd.qcut(test['Fare'], 4, labels=[1, 2, 3, 4])
+
+# Now we can drop the name and fare values from the data as they are not needed.
+
+train = train.drop(['Name'], axis=1)
+test = test.drop(['Name'], axis=1)
+train = train.drop(['Fare'], axis=1)
+test = test.drop(['Fare'], axis=1)
+
+# print(train.head(3))
+# print(test.head(3))
+
+# Now we cant start analyzing the data.
+
+# DATA ANALYSIS:
+
+# I will be using 50% of the training data to test the accuracy of different machine learning models.
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+predict = train.drop(columns=['Survived', 'PassengerId'])
+target = train['Survived']
+
+x_train, x_test, y_train, y_test = train_test_split(predict, target, test_size=0.5, random_state=0)
+
+# I will be using the following models and testing their accuracy on the training data:
+# Gaussian Naive Bayes
+# Decision Tree Classifier
+# Random Forest Classifier
+# k-Nearest Neighbors
+# Gradient Boosting Classifier
+
+# Gaussian Naive Bayes:
+
+from sklearn.naive_bayes import GaussianNB
+
+gaussian = GaussianNB()  # initialze gaussian
+gaussian.fit(x_train, y_train)   # Fit training data
+y_predict = gaussian.predict(x_test)  #predict y from x_test
+gaussian_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)  #get accuracy of the prediction w.r.t y_test.
+print(gaussian_accuracy)
+
+# Decision Tree Classifier:
+from sklearn.tree import DecisionTreeClassifier
+
+dtree = DecisionTreeClassifier()
+dtree.fit(x_train, y_train)
+y_predict = dtree.predict(x_test)
+decisionTree_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
+print(decisionTree_accuracy)
+
+# Random Forest Classifier:
+
+from sklearn.ensemble import RandomForestClassifier
+
+rforest = RandomForestClassifier()
+rforest.fit(x_train, y_train)
+y_predict = rforest.predict(x_test)
+randomForest_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
+print(randomForest_accuracy)
+
+# k-nearest Neighbours:
+
+from sklearn.neighbors import KNeighborsClassifier
+
+kNeigh = KNeighborsClassifier()
+kNeigh.fit(x_train, y_train)
+y_predict = kNeigh.predict(x_test)
+kNeighbours_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
+print(kNeighbours_accuracy)
+
+# Gradient Boosting Classifier:
+
+from sklearn.ensemble import GradientBoostingClassifier
+
+gBoost = GradientBoostingClassifier()
+gBoost.fit(x_train, y_train)
+y_predict = gBoost.predict(x_test)
+gBoost_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
+print(gBoost_accuracy)
+
+
+
+# Visualising the accuracy rates of the models:
+
+df1 = pd.DataFrame({
+    'Model': ['KNN', 'Random Forest', 'Naive Bayes', 'Decision Tree', 'G-Boost Classifier'],
+    'Accuracy': [kNeighbours_accuracy, randomForest_accuracy, gaussian_accuracy, decisionTree_accuracy, gBoost_accuracy]})
+
+y = df1["Accuracy"]
+xlocs = [0, 1, 2, 3, 4]
+print(y)
+print(range(5))
+plt.figure(figsize=(8, 7))
+models_plot = sns.barplot(x="Model", y="Accuracy", data=df1, palette="muted")
+# models_plot.set_ylabels("Accuracy of the model")
+
+for i in range(5):
+    plt.text(xlocs[i]-0.3, y[i]+2, str(y[i]))
+
+models_plot.set_xticklabels(models_plot.get_xticklabels(), rotation=15, ha="right")
+plt.show()
+
+# Here we can see taht the best model for predicting the survivors is the Gradient Boosting Classifier.
+# Lets use it to predict the survival of the whole test group in test.csv.
 
 
 
