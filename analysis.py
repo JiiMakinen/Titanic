@@ -24,9 +24,9 @@ test = test.drop(columns=['Ticket', 'Cabin'])
 
 # The training set is missing two Embarked values. they can be easily given the most dominant value of the three.
 
-print("Embarked from Southampton: ", train[train["Embarked"] == "S"].shape[0])
-print("Embarked from Cherbourg: ", train[train["Embarked"] == "C"].shape[0])
-print("Embarked from Queenstown: ", train[train["Embarked"] == "Q"].shape[0])
+# print("Embarked from Southampton: ", train[train["Embarked"] == "S"].shape[0])
+# print("Embarked from Cherbourg: ", train[train["Embarked"] == "C"].shape[0])
+# print("Embarked from Queenstown: ", train[train["Embarked"] == "Q"].shape[0])
 
 # Most of the people aboard embarked from Southhampton. Thus we can safely fill the missing two embarkment values
 # to be "S"
@@ -43,13 +43,13 @@ train = train.fillna({"Embarked": "S"})
 
 
 age1mean = train[train["Pclass"] == 1]["Age"].mean()
-print(age1mean)
+# print(age1mean)
 
 age2mean = train[train["Pclass"] == 2]["Age"].mean()
-print(age2mean)
+# print(age2mean)
 
 age3mean = train[train["Pclass"] == 3]["Age"].mean()
-print(age3mean)
+# print(age3mean)
 
 # Fill missing values in training data
 for i in range(len(train["PassengerId"])):
@@ -79,14 +79,14 @@ for i in range(len(test["PassengerId"])):
 # Lets fill the missing fare value from test data with the mean of its class
 
 dfnan = test[test.isnull().any(axis=1)]
-print(dfnan)
+# print(dfnan)
 
 # The missing Fare value is from class 3, passangerid 1044 and row 152, lets fill it.
 
 test["Fare"][152] = train[train["Pclass"] == 3]["Fare"].mean()
 
-print(pd.isnull(train).sum())
-print(pd.isnull(test).sum())
+# print(pd.isnull(train).sum())
+# print(pd.isnull(test).sum())
 
 # Missing data has been filled, now assing numerical groups to sex, fare, embarkment
 
@@ -143,7 +143,7 @@ gaussian = GaussianNB()  # initialze gaussian
 gaussian.fit(x_train, y_train)   # Fit training data
 y_predict = gaussian.predict(x_test)  #predict y from x_test
 gaussian_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)  #get accuracy of the prediction w.r.t y_test.
-print(gaussian_accuracy)
+# print(gaussian_accuracy)
 
 # Decision Tree Classifier:
 from sklearn.tree import DecisionTreeClassifier
@@ -152,7 +152,7 @@ dtree = DecisionTreeClassifier()
 dtree.fit(x_train, y_train)
 y_predict = dtree.predict(x_test)
 decisionTree_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
-print(decisionTree_accuracy)
+# print(decisionTree_accuracy)
 
 # Random Forest Classifier:
 
@@ -162,7 +162,7 @@ rforest = RandomForestClassifier()
 rforest.fit(x_train, y_train)
 y_predict = rforest.predict(x_test)
 randomForest_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
-print(randomForest_accuracy)
+# print(randomForest_accuracy)
 
 # k-nearest Neighbours:
 
@@ -172,7 +172,7 @@ kNeigh = KNeighborsClassifier()
 kNeigh.fit(x_train, y_train)
 y_predict = kNeigh.predict(x_test)
 kNeighbours_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
-print(kNeighbours_accuracy)
+# print(kNeighbours_accuracy)
 
 # Gradient Boosting Classifier:
 
@@ -182,7 +182,7 @@ gBoost = GradientBoostingClassifier()
 gBoost.fit(x_train, y_train)
 y_predict = gBoost.predict(x_test)
 gBoost_accuracy = round(accuracy_score(y_predict, y_test) * 100, 2)
-print(gBoost_accuracy)
+# print(gBoost_accuracy)
 
 
 # Visualising the accuracy rates of the models:
@@ -193,11 +193,8 @@ df1 = pd.DataFrame({
 
 y = df1["Accuracy"]
 xlocs = [0, 1, 2, 3, 4]
-print(y)
-print(range(5))
 plt.figure(figsize=(8, 7))
 models_plot = sns.barplot(x="Model", y="Accuracy", data=df1, palette="muted")
-
 
 for i in range(5):
     plt.text(xlocs[i]-0.3, y[i]+2, str(y[i]))
