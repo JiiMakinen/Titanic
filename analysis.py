@@ -37,16 +37,59 @@ train = train.fillna({"Embarked": "S"})
 # Now we still have a lot of missing Age values. I'm going to fill these values with the average of the Pclass. As in,
 # calculate the average age of every passenger class. Then fill the ageless first class passengers with the average
 # of 1st class passengers and so on. We'll claculate the averages from the training data.
+# This may not be the optimal solution for filling the ages, could be improved.
 
-class1 = train[train["Pclass"] == 1]
-age1mean = class1["Age"].sum()/len(class1)
+
+age1mean = train[train["Pclass"] == 1]["Age"].mean()
 print(age1mean)
 
-class2 = train[train["Pclass"] == 2]
-age2mean = class2["Age"].sum()/len(class2)
+age2mean = train[train["Pclass"] == 2]["Age"].mean()
 print(age2mean)
 
-class3 = train[train["Pclass"] == 3]
-age3mean = class3["Age"].sum()/len(class3)
+age3mean = train[train["Pclass"] == 3]["Age"].mean()
 print(age3mean)
+
+# Fill missing values in training data
+for i in range(len(train["PassengerId"])):
+    if pd.isnull(train["Age"][i]):
+        if train["Pclass"][i] == 1:
+            train["Age"][i] = age1mean
+        elif train["Pclass"][i] == 2:
+            train["Age"][i] = age2mean
+        elif train["Pclass"][i] == 3:
+            train["Age"][i] = age3mean
+
+
+
+# Fill values in the test data.
+
+for i in range(len(test["PassengerId"])):
+    if pd.isnull(test["Age"][i]):
+        if test["Pclass"][i] == 1:
+            test["Age"][i] = age1mean
+        elif test["Pclass"][i] == 2:
+            test["Age"][i] = age2mean
+        elif test["Pclass"][i] == 3:
+            test["Age"][i] = age3mean
+
+
+
+# Lets fill the missing fare value from test data with the mean of its class
+
+dfnan = test[test.isnull().any(axis=1)]
+print(dfnan)
+
+# The missing Fare value is from class 3, passangerid 1044 and row 152, lets fill it.
+
+test["Fare"][152] = train[train["Pclass"] == 3]["Fare"].mean()
+
+print(pd.isnull(train).sum())
+print(pd.isnull(test).sum())
+
+# Missing data has been filled, now assing numerical groups to sex, fare, embarkment
+
+
+
+
+
 
