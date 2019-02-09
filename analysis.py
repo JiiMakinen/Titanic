@@ -43,6 +43,7 @@ train = train.fillna({"Embarked": "S"})
 
 
 age1mean = train[train["Pclass"] == 1]["Age"].mean()
+
 # print(age1mean)
 
 age2mean = train[train["Pclass"] == 2]["Age"].mean()
@@ -206,7 +207,14 @@ plt.show()
 # Lets use it to predict the survival of the whole test group in test.csv.
 
 
+test_id = test['PassengerId']
+
+prediction = gBoost.predict(test.drop(columns='PassengerId'))
+
+results = pd.DataFrame({'PassengerId': test_id, 'Survived': prediction})
 
 
+print(round(results['Survived'].mean()*100, 2), "% of the passengers in the test file could have survived.")
 
-
+# We'll conclude that almost 40% of the test file passengers could have survived the Titanic disaster. This estimate is
+# rough as the training data was missing a lot of values which had to be filled.
