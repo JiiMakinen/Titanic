@@ -38,12 +38,11 @@ train = train.fillna({"Embarked": "S"})
 
 # Now we still have a lot of missing Age values. I'm going to fill these values with the average of the Pclass. As in,
 # calculate the average age of every passenger class. Then fill the ageless first class passengers with the average
-# of 1st class passengers and so on. We'll claculate the averages from the training data.
+# of 1st class passengers and so on. We'll calculate the averages from the training data.
 # This may not be the optimal solution for filling the ages, could be improved.
 
 
 age1mean = train[train["Pclass"] == 1]["Age"].mean()
-
 # print(age1mean)
 
 age2mean = train[train["Pclass"] == 2]["Age"].mean()
