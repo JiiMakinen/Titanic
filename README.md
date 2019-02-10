@@ -8,7 +8,7 @@ Data provided by Kaggle (https://www.kaggle.com/) from the "Titanic - Machine le
  train.csv will be used to train our machine.
  test.csv will be used to test our machine.
 
-Data Dictionary
+# Data Dictionary
 
  Variable Definition Key
 
