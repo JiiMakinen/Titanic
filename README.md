@@ -5,23 +5,23 @@ First data analysis project with Python, so this will be a learning project for 
 
 Data provided by Kaggle (https://www.kaggle.com/) from the "Titanic - Machine learning from disaster" -competition.
 
-train.csv will be used to train our machine.
-test.csv will be used to test our machine.
+ train.csv will be used to train our machine.
+ test.csv will be used to test our machine.
 
 Data Dictionary
 
-Variable Definition Key
+ Variable Definition Key
 
-survival: Survival 0 = No, 1 = Yes 
-pclass: Ticket class 1 = 1st, 2 = 2nd, 3 = 3rd 
-sex: Sex 
-Age: Age in years 
-sibsp: # of siblings / spouses aboard the Titanic 
-parch: # of parents / children aboard the Titanic
-ticket: Ticket number
-fare: Passenger fare
-cabin: Cabin number
-embarked: Port of Embarkation C = Cherbourg, Q = Queenstown, S = Southampton
+  survival: Survival 0 = No, 1 = Yes 
+  pclass: Ticket class 1 = 1st, 2 = 2nd, 3 = 3rd 
+  sex: Sex 
+  Age: Age in years 
+  sibsp: # of siblings / spouses aboard the Titanic 
+  parch: # of parents / children aboard the Titanic
+  ticket: Ticket number
+  fare: Passenger fare
+  cabin: Cabin number
+  embarked: Port of Embarkation C = Cherbourg, Q = Queenstown, S = Southampton
 
 Variable Notes in train and test files:
 
