@@ -51,7 +51,7 @@ age2mean = train[train["Pclass"] == 2]["Age"].mean()
 age3mean = train[train["Pclass"] == 3]["Age"].mean()
 # print(age3mean)
 
-# Fill missing values in training data
+# Fill missing values in training data. UPDATE THIS LATER FOR MORE EFFICIENT METHOD
 for i in range(len(train["PassengerId"])):
     if pd.isnull(train["Age"][i]):
         if train["Pclass"][i] == 1:
