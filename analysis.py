@@ -23,11 +23,6 @@ test = test.drop(columns=['Ticket', 'Cabin'])
 # print(train.columns)
 
 # The training set is missing two Embarked values. they can be easily given the most dominant value of the three.
-
-# print("Embarked from Southampton: ", train[train["Embarked"] == "S"].shape[0])
-# print("Embarked from Cherbourg: ", train[train["Embarked"] == "C"].shape[0])
-# print("Embarked from Queenstown: ", train[train["Embarked"] == "Q"].shape[0])
-
 # Most of the people aboard embarked from Southhampton. Thus we can safely fill the missing two embarkment values
 # to be "S"
 
